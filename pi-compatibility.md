@@ -121,6 +121,18 @@ full-output paths; run `mcp/results.test.ts`, `mcpEngine.test.ts`, web MCP card 
   Prefer public discovery/parsing APIs when they meet those needs; retain parity coverage in history,
   template and composer tests until then.
 
+## Context-budget limitations
+
+**Owner:** [[submodule-server-agent]]. These are upstream limitations, not host adaptations. In the
+installed SDK, `findCutPoint` preserves whole tool-call/result pairs even above `keepRecentTokens`,
+and `generateSummary` limits summary output without bounding aggregate summary input. Bounded tool
+results therefore do not guarantee whole-request admission.
+
+**Upgrade check:** inspect those public functions in the installed compaction implementation for
+retained-batch and summary-input budgeting. Use a tool pair larger than the recent-token target and
+user text larger than the summary model's input window to assess admission, not as CI assertions that
+the limitations must persist. Do not compensate with host retries or compaction-default overrides.
+
 ## Not temporary SDK workarounds
 
 Project-server approvals, private project/chat overrides, confirmation policy, credential masking,
