@@ -276,7 +276,8 @@ jobs:
   ci-passed:
     name: CI passed
     timeout-minutes: 5
-    needs: [changes, lint, test, pi-packages, e2e-shard, binary-shard, binary-windows, desktop-shard]
+    needs:
+      [changes, lint, test, pi-packages, e2e-shard, binary-shard, binary-windows, desktop-shard]
     if: ${{ !cancelled() }}
     runs-on: ubuntu-latest
     steps:
