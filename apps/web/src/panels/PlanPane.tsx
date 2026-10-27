@@ -19,6 +19,7 @@ import {
 } from "@remixicon/react";
 import type { ReviewComment, TodoGroupItem, TodoItem } from "@thinkrail/contracts";
 import { useT } from "@thinkrail/locales/react";
+import { isPromptKeyEventComposing } from "../../prompt/SlashCommandCompletion";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -617,6 +618,7 @@ function PlanComposer({
 				value={draft}
 				onChange={(e) => setDraft(e.target.value)}
 				onKeyDown={(e) => {
+					if (isPromptKeyEventComposing(e.nativeEvent)) return;
 					if (e.key === "Enter" && !e.shiftKey) {
 						e.preventDefault();
 						void submit();

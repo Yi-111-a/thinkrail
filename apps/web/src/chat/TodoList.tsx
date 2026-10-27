@@ -21,6 +21,7 @@ import { IconTooltip } from "@thinkrail/ui/tooltip";
 import { cn } from "@thinkrail/ui/utils";
 import { useState } from "react";
 import { PlanStatusIcon, SectionLabel } from "./planKit";
+import { isPromptKeyEventComposing } from "../../prompt/SlashCommandCompletion";
 import {
 	groupProgress,
 	type ItemChangeSet,
@@ -125,6 +126,7 @@ export function TodoAddRow({
 				value={draft}
 				onChange={(e) => setDraft(e.target.value)}
 				onKeyDown={(e) => {
+					if (isPromptKeyEventComposing(e.nativeEvent)) return;
 					if (e.key === "Enter") void submit();
 				}}
 				placeholder={t("chat.todo.addPlaceholder")}
